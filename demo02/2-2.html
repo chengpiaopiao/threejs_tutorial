@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>camera perspective</title>
+    <script type="text/javascript" src="../js/Three.js"></script>
+    <script>
+        function init(){
+            // renderer
+            var renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('mainCanvas')
+            });
+            renderer.setClearColor(0x000000);
+
+            // scene
+            var scene = new THREE.Scene();
+
+            // camera
+            var camera = new THREE.PerspectiveCamera(45, 400/300, 1, 100);
+            camera.position.set(0,0,5);
+            scene.add(camera);
+
+            // a cube in scene
+            /*
+            var cube = new THREE.Mesh(
+                    new THREE.CubeGeometry(1,1,1),
+                    new THREE.MeshBasicMaterial({
+                        color: 0xff0000,
+                        wireframe: true
+                    })
+            );
+            scene.add(cube);
+            */
+            var material = new THREE.MeshBasicMaterial({color: 0xffff00, wireframe: true});
+            drawCube(scene, material);
+
+            // render
+            renderer.render(scene, camera);
+        }
+
+        function drawCube(scene, material){
+            var cube = new THREE.Mesh(new THREE.CubeGeometry(1,1,1), material);
+            scene.add(cube);
+        }
+
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+</body>
+</html>

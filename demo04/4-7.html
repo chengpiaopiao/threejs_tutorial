@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="../js/three.js"></script>
+    <script type="text/javascript" src="../js/helvetiker_regular.typeface.js"></script>
+    <script>
+        function init(){
+            // renderer
+            var renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('mainCanvas'),
+                antialias: true
+            });
+//            renderer.setClearColor(0x000000);
+
+            // scene
+            var scene = new THREE.Scene();
+
+            // camera
+            var camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3.75, 0.1, 100);
+            camera.position.set(0, 0, 25);
+            camera.lookAt(new THREE.Vector3(0,0,0));
+            scene.add(camera);
+
+            // light
+            var light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(2, 3, 5);
+            scene.add(light);
+
+            // geometry
+            var texture = new THREE.ImageUtils.loadTexture('../img/chess.png', {}, function(){
+                renderer.render(scene, camera);
+            });
+            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(4,4);
+
+            var material = new THREE.MeshLambertMaterial({map: texture});
+            var geo = new THREE.PlaneGeometry(6,6,4,4);
+//            var geo = new THREE.SphereGeometry(3,48,32);
+            var mesh = new THREE.Mesh(geo, material);
+            scene.add(mesh);
+
+            // render
+            renderer.render(scene, camera);
+        }
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+</body>
+</html>

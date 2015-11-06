@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="../js/three.js"></script>
+    <script src="../js/MTLLoader.js"></script>
+    <script src="../js/OBJMTLLoader.js"></script>
+    <script>
+        function init(){
+            // renderer
+            var renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('mainCanvas')
+            });
+            renderer.setClearColor(0x000000);
+
+            // scene
+            var scene = new THREE.Scene();
+
+            // camera
+            var camera = new THREE.OrthographicCamera(-5, 5, 3.75, -3,75, 0.1, 100);
+            camera.position.set(0,-5,15);
+            camera.lookAt(new THREE.Vector3(0, 2, 0));
+            scene.add(camera);
+
+            // light
+            var light = new THREE.DirectionalLight(0xffffff);
+            light.position.set(0, -5, 5);
+            scene.add(light);
+
+            // mesh
+            var mesh;
+            var loader = new THREE.OBJMTLLoader();
+            loader.addEventListener('load', function(event) {
+                var obj = event.content;
+                mesh = obj;
+                scene.add(mesh);
+            });
+            loader.load('../js/port.obj', '../js/port.mtl');
+
+            setInterval(draw, 20);
+
+            function draw(){
+                mesh.rotation.y = (mesh.rotation.y + 0.01) % (Math.PI*2);
+                renderer.render(scene, camera);
+            }
+        }
+
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="mainCanvas" width="400px" height="300px"></canvas>
+</body>
+</html>

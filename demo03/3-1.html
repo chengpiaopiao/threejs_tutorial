@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>camera perspective</title>
+    <script type="text/javascript" src="../js/Three.js"></script>
+    <script>
+        function init(){
+            // renderer
+            var renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('mainCanvas')
+            });
+            renderer.setClearColor(0x000000);
+
+            // scene
+            var scene = new THREE.Scene();
+
+            // camera
+            var camera = new THREE.OrthographicCamera(-5, 5, 3.5, -3.5, 0.1, 100);
+            camera.position.set(5,5,5);
+            camera.lookAt(new THREE.Vector3(0,0,0));
+            scene.add(camera);
+
+            drawAxes(scene);
+
+            var material = new THREE.MeshLMaterial({color: 0xffff00, wireframe: true});
+
+//            drawCube(scene, material);
+//            drawPlane(scene, material);
+//            drawSphere(scene, material);
+//            drawCircle(scene, material);
+//            drawCylinder(scene, material);
+//            drawTetrahedron(scene, material);
+//            drawOctahedron(scene, material);
+//            drawIcosahedron(scene, material);
+//            drawTorus(scene, material);
+            drawTorusKnot(scene, material);
+
+            // render
+            renderer.render(scene, camera);
+        }
+
+
+        function drawCube(scene, material){
+            var cube = new THREE.Mesh(new THREE.CubeGeometry(1,2,3,2,2,3), material);
+            scene.add(cube);
+        }
+
+        function drawPlane(scene, material){
+            var plane = new THREE.Mesh(new THREE.PlaneGeometry(2,4,2,2), material);
+            scene.add(plane);
+        }
+
+        function drawSphere(scene, material){
+            var sphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(3,24,12, 0, Math.PI*2, 0, Math.PI/2), material
+            );
+            scene.add(sphere);
+        }
+
+        function drawCircle(scene,material){
+            var circle = new THREE.Mesh(
+                    new THREE.CircleGeometry(3, 18, Math.PI/3, Math.PI/4*3), material
+            );
+            scene.add(circle);
+        }
+
+        function drawCylinder(scene, material){
+            var cyliner = new THREE.Mesh(
+                    new THREE.CylinderGeometry(2, 3, 4, 18, 3), material
+            );
+            scene.add(cyliner);
+        }
+
+        function drawTetrahedron(scene, material){
+            var tetrahedron = new THREE.Mesh(
+                    new THREE.TetrahedronGeometry(3), material
+            );
+            scene.add(tetrahedron);
+        }
+
+        function drawOctahedron(scene, material){
+            var octahedron = new THREE.Mesh(
+                    new THREE.OctahedronGeometry(3), material
+            );
+            scene.add(octahedron);
+        }
+
+        function drawIcosahedron(scene, material){
+            var icosahedron = new THREE.Mesh(
+                    new THREE.IcosahedronGeometry(3), material
+            );
+            scene.add(icosahedron);
+        }
+
+        function drawTorus(scene, material){
+            var torus = new THREE.Mesh(
+                    new THREE.TorusGeometry(3, 1, 24, 36, Math.PI*2), material
+            );
+            scene.add(torus);
+        }
+
+        function drawTorusKnot(scene, material){
+            var torusKnot = new THREE.Mesh(
+                    new THREE.TorusKnotGeometry(2, 0.5, 64, 16), material
+            );
+            scene.add(torusKnot);
+        }
+
+        function drawAxes(scene){
+            // x-axis
+            var xGeo = new THREE.Geometry();
+            xGeo.vertices.push(new THREE.Vector3(0,0,0));
+            xGeo.vertices.push(new THREE.Vector3(1,0,0));
+            var xMaterial = new THREE.MeshBasicMaterial({
+                color: 0xff0000
+            });
+            var xAxis = new THREE.Line(xGeo, xMaterial);
+            scene.add(xAxis);
+
+            // y-axis
+            var yGeo = new THREE.Geometry();
+            yGeo.vertices.push(new THREE.Vector3(0,0,0));
+            yGeo.vertices.push(new THREE.Vector3(0,1,0));
+            var yMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ff00
+            });
+            var yAxis = new THREE.Line(yGeo, yMaterial);
+            scene.add(yAxis);
+
+            // z-axis
+            var zGeo = new THREE.Geometry();
+            zGeo.vertices.push(new THREE.Vector3(0,0,0));
+            zGeo.vertices.push(new THREE.Vector3(0,0,1));
+            var zMaterial = new THREE.MeshBasicMaterial({
+                color: 0x0000ff
+            });
+            var zAxis = new THREE.Line(zGeo, zMaterial);
+            scene.add(zAxis);
+
+
+        }
+
+    </script>
+</head>
+<body onload="init();">
+    <canvas id="mainCanvas" width="400" height="300"></canvas>
+</body>
+</html>
